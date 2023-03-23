@@ -1,0 +1,953 @@
+<input type="hidden" name="attr_archetype" value="agent"/>
+    <!--Popup Montar Rolagem-->
+    <div id="popup" class="popup">
+    <div class="popup-container">
+        <button id="fechar-popup">&times;</button>
+        <div class="popup-header">
+            <h2 data-i18n="dice-pool-assembly">Montar pilha de dados</h2>
+        </div>
+        <div class="popup-body">
+            <form id="form-dados">
+                <ul id="checkboxes">
+                <li class="humano">
+                    <input type="checkbox" name="attr_dados" value="humano" id="humano" data-np-invisible="1" data-np-checked="1">
+                    <label class="checkbox" for="humano" data-i18n="roll-human-dice">Humano</label>
+                </li>   
+                <div id="dinamic"><!-- Aqui será inserido dinamicamente os checkboxes --></div>
+
+                <li>
+                    <input type="checkbox" name="attr_dados" value="ajuda" id="ajuda" data-np-invisible="1" data-np-checked="1">
+                    <label class="checkbox" for="ajuda" data-i18n="roll-help-dice">Ajuda</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="attr_dados" value="paranoia" id="paranoia" data-np-invisible="1" data-np-checked="1">
+                    <label class="checkbox" for="paranoia" data-i18n="roll-paranoid-dice">Paranoia</label>
+                </li>
+                </ul>
+                <fieldset>
+                <legend data-i18n="dm-ajust">(DES)VANTAGEM</legend>
+                <ul class="inline mod">
+                    <li>
+                       <input id="mod-3" type="radio" name="attr_modificador" value="-3">
+                       <label for="mod-3" class="radio">-3</label>
+                    </li>
+                    <li>
+                       <input id="mod-2" type="radio" name="attr_modificador" value="-2">
+                       <label for="mod-2" class="radio">-2</label>
+                    </li>
+                    <li>
+                       <input id="mod-1" type="radio" name="attr_modificador" value="-1">
+                       <label for="mod-1" class="radio">-1</label>
+                    </li>
+                    <li>
+                       <input id="mod-0" type="radio" name="attr_modificador" value="0" checked>
+                       <label for="mod-0" class="radio">0</label>
+                    </li>
+                    <li>
+                       <input id="mod+1" type="radio" name="attr_modificador" value="+1">
+                       <label for="mod+1" class="radio">+1</label>
+                    </li>
+                    <li>
+                       <input id="mod+2" type="radio" name="attr_modificador" value="+2">
+                       <label for="mod+2" class="radio">+2</label>
+                    </li>
+                    <li>
+                       <input id="mod+3" type="radio" name="attr_modificador" value="+3">
+                       <label for="mod+3" class="radio">+3</label>
+                    </li>
+                 </ul>
+                </fieldset>
+                <button id="rolar-dados" data-i18n="roll-dices" type="roll" name="attr_roll_" value="/roll 1d6 + @{Bluff}">Rolar dados</button>
+            </form>
+        </div>
+    </div>
+    </div>
+
+    <div class="main ficha">
+        <!--BTN: Dice Pool Assembly-->
+        <button id="abrir-popup" href="#" data-i18n="dice-pool-assembly">Montar pilha de dados</button>
+    <!--Page 1-->
+    <div class="container">
+        <!--Header: campaign, player and archetype-->
+        <div class="conspa"></div>
+        <div class="container-header header-bg">
+            <div class="choosearchetype">
+                <p class="data">
+                    <span class="label" data-i18n="archetype">Arquétipo:</span>
+                    <select name="attr_archetype" id="archetype" onChange="archetype()">
+                        <option value="agent" selected="selected" id="agent" data-i18n="agent">Agente</option>
+                        <option value="consp" id="consp" data-i18n="conspiratorialist">Conspiracionista</option>
+                        <option value="unwary" id="unwary" data-i18n="unwary">Incauto</option>
+                    </select>
+                </p>
+            </div>
+            <div class="header">
+                <p class="data">
+                    <span class="label" data-i18n="campaign">Campanha:</span>
+                    <input type="text" name="attr_campaign"/>
+                </p>
+                <p class="data">
+                    <span class="label" data-i18n="player-name">Jogador:</span>
+                    <input type="text" name="attr_player-name"/>
+                </p>
+                
+            </div>
+        </div>
+
+        <!--Row 1: character-info, XP, Appearance, Archetype...-->
+        <div class="container-row-1">
+            <!--Character-info-->
+            <div class="character-info">
+                <p class="data">
+                    <span class="label" data-i18n="name">Nome:</span>
+                    <input type="text" name="attr_character_name"/>
+                </p>
+                <p class="data">
+                    <span class="label" data-i18n="gender">Gênero:</span>
+                    <input type="text" name="attr_gender"/>
+                </p>
+                <p class="data">
+                    <span class="label" data-i18n="birth-date">Data de Nasc:</span>
+                    <input class="birth-date" type="text" name="attr_birth-date"/>
+                    <span class="label" data-i18n="age">Idade:</span>
+                    <input type="text" maxlength="4" name="attr_age"/>
+                </p>
+                <p class="data">
+                    <span class="label" data-i18n="birthplace">Local de Nasc:</span>
+                    <input type="text" name="attr_birthplace"/>
+                </p>
+                
+            </div>
+            <!--XP-->
+            <div class="xp">
+                <!--Total XP-->
+                <div class="flex">
+                    <span class="label" data-i18n="total-xp">XP Total</span>
+                    <input type="text" name="attr_total-xp"/>
+                </div>
+                <!--Burned XP to reduce paranoia-->
+                <div class="flex">
+                    <span class="label">
+                        <span data-i18n="burn-xp">XP Queimado:</span>
+                        <small data-i18n="reduce-paranoia">para diminuir paranoia</small>
+                    </span>
+                    <input type="text" name="attr_reduce-paranoia"/>
+                </div>
+                <!--Accumulated XP-->
+                <div class="flex">
+                    <span class="label" data-i18n="accumulated-xp">XP Acumulado:</span>
+                    <input type="text" name="attr_accumulated-xp"/>
+                </div>
+            </div>
+            <!--Appearance-->
+            <div class="appearance">
+                <p class="data"><span class="label" data-i18n="appearance">Aparência:</span></p>
+                <textarea rows="4" name="attr_appearance"></textarea>
+            </div>
+            <!--Archetypes-->
+            <div class="archetype">
+                <!--Agent-->
+                <div class="agent">
+                    <p class="data">
+                        <span class="label" data-i18n="agency">Agência:</span>
+                        <input type="text" name="attr_agency"/>
+                    </p>
+                    <p class="data">
+                        <span class="label" data-i18n="partner">Parceiro (se houver):</span>
+                        <input type="text" name="attr_partner"/>
+                    </p>
+                    <p class="data">
+                        <span class="label" data-i18n="director">Diretor:</span>
+                        <input type="text" name="attr_director"/>
+                    </p>
+                    <p class="data">
+                        <span class="label" data-i18n="immediate-superior">Superior Direto:</span>
+                        <input type="text" name="attr_immediate-superior"/>
+                    </p>
+                    <p class="data">
+                        <span class="label" data-i18n="recruiter">Recrutador:</span>
+                        <input type="text" name="attr_recruiter"/>
+                    </p>
+                    <p class="data">
+                        <span class="label" data-i18n="codename">Seu codinome (se houver):</span>
+                        <input type="text" name="attr_codename"/>
+                    </p>
+                </div>
+                <!--Conspiratorialist-->
+                <div class="consp">
+                    <span class="label" data-i18n="conspiracy-group">Descreva seu &nbsp; <br> &nbsp; grupo conspiracionista</span>
+                    <textarea rows="4" name="attr_consp"></textarea>
+                </div>
+                <!--Unwary-->
+                <div class="unwary">
+                    <span class="label" data-i18n="unwary-life">Como era sua vida até hoje?</span>
+                    <textarea rows="4" name="attr_unwary"></textarea>
+                </div>
+            </div>
+        </div>
+        <!--Row 2:Main Sheet...-->
+        <div class="container-row-2">
+                <div class="rules">
+                    <!--Rules Tittle-->
+                    <span class="label rule-tittle" data-i18n="rolls-and-dices">Rolagens, dados e testes</span>
+                    <!--Rules-->
+                        <!--SINGLE DICE ROLL-->
+                        <div class="single-dice-roll rule-box">
+                            <span class="txt-right tittle" data-i18n="single-dice-roll">Rolagens de dado único</span>
+                            <span class="txt-right test-type" data-i18n="risk-test">Teste de risco</span>
+                            <span class="txt-right test-cond" data-i18n="risk-test-cond">Busca de benefícios e vantagens</span>
+                            <span class="txt-right test-type" data-i18n="resist-test">Teste de resistencia</span>
+                            <span class="txt-right test-cond" data-i18n="risk-test-cond">Para evitar um perigo iminente</span>
+                            <p class="rule" data-i18n="single-dice-rule">
+                                A cada dado na pilha o jogador
+                                adiciona 1 na “zona positiva” do dado,
+                                aumentando sua chande de sucesso.
+                                1 É SEMPRE FALHA E 6 É SEMPRE SUCESSO
+                                APOSTA: reduzir chance de sucesso
+                                para obter vantagens adicionais.
+                                ESTRESSE: adicionar o Dado de Paranoia
+                                fazendo Teste de Paranoia imediato.
+                            </p>
+                        </div>
+                        <!--POOL DICE-->
+                        <div class="dice-pool rule-box"> 
+                            <span class="txt-right tittle" data-i18n="dice-pool">Pilha de dados</span>
+                            <span class="txt-right test-type" data-i18n="challenge-test">Teste de desafio</span>
+                            <span class="txt-right test-cond" data-i18n="challenge-test-cond">Ação para realizar um objetivo</span>
+                            <span class="txt-right test-type" data-i18n="opposition-test">Teste de oposição</span>
+                            <span class="txt-right test-cond" data-i18n="opposition-test-cond">Quando um personagem ameaça outro</span>
+                            <p class="rule" data-i18n="dice-pool-rule">
+                                Rola pilha de dados e compara apenas
+                                o maior resultado à tabela abaixo:
+                            </p>
+                            <table class="dice-pool-table">
+                                <tbody>
+                                    <tr>
+                                        <th class="txt-right" scope="row"><span class="wbg">1 - 4</span></th>
+                                        <td data-label="1 - 4" data-i18n="consequence">Consequência</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="txt-right" scope="row"><span class="wbg">5</span></th>
+                                        <td data-label="5" data-i18n="intervention+consequence">Intervenção + Consequência</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="txt-right" scope="row"><span class="wbg">6</span></th>
+                                        <td data-label=" 6" data-i18n="intervention"> Intervenção</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="rule" data-i18n="extra-intervention">
+                                Cada 6 além do primeiro adiciona uma
+                                Intervenção extra. Em uma falha, cada
+                                1 adiciona uma Consequência extra.
+                            </p>
+                        </div>
+                        <!--Building the Pool-->
+                        <div class="build-pool rule-box"> 
+                            <span class="txt-right tittle" data-i18n="build-pool">Tipos de dados para empilhar</span>
+
+                            <span class="txt-right test-type dice" data-i18n="human-dice">DADO HUMANO</span>
+                            <span class="txt-right test-cond" data-i18n="human-dice-cond">Qualquer atividade inerentemente humana.</span>
+
+                            <span class="txt-right test-type dice" data-i18n="occupation-dice">DADO DE OCUPAÇÃO</span>
+                            <span class="txt-right test-cond" data-i18n="occupation-dice-cond">Vasta gama de aptidões de uma atividade</span>
+
+                            <span class="txt-right test-type dice" data-i18n="aspect-dice">DADO DE ASPECTO</span>
+                            <span class="txt-right test-cond" data-i18n="aspect-dice-cond">Sentença que define algo sobre o personagem</span>
+                            
+                            <span class="txt-right test-type two-dices" data-i18n="specialization-dices">DADOS DE ESPECIALIZAÇÃO</span>
+                            <span class="txt-right test-cond" data-i18n="specialization-dices-cond">Restrita área de excelência de um Aspecto</span>
+
+                            <span class="txt-right test-type dice" data-i18n="paranoia-dice">DADO DE PARANOIA</span>
+                            <span class="txt-right test-cond" data-i18n="paranoia-dice-cond">Síntese da degradação emocional e psíquica</span>
+
+                            <span class="txt-right test-type dice" data-i18n="help-dice">DADO DE AJUDA</span>
+                            <span class="txt-right test-cond" data-i18n="help-dice-cond">Quando há auxílio competente de um aliado</span>
+
+                            <span class="txt-right test-type dices" data-i18n="dm-ajust">(DES)VANTAGEM</span>
+                            <span class="txt-right test-cond" data-i18n="dm-ajust-cond">Ajustes do mestre (+3D ou -3D)</span>
+                        </div>
+                        <!--How to prepare a test-->
+                        <div class="prepare-test rule-box"> 
+                            <span class="txt-right tittle" data-i18n="test-prepare">Como preparar um teste</span>
+                            <p class="rule" data-i18n="test-prepare-rule">
+                                Quando o mestre pedir por um teste,
+                                o jogador consulta esta ficha e faz uma
+                                pilha de dados com todos os elementos
+                                entre HUMANO, OCUPAÇÃO, ASPECTO e
+                                ESPECIALIZAÇÃO* que sejam relevantes
+                                à situação. Então ele escolhe se adiciona
+                                PARANOIA**, checa se receberá AJUDA e o
+                                mestre avalia se aplica (DES)VANTAGEM.
+                            </p>
+                            <table class="extra-rules">
+                                <tbody>
+                                    <tr>
+                                        <th class="txt-right" scope="row">*</th>
+                                        <td data-i18n="specialization-rule">Especialização adiciona 2 dados, mas só
+                                            pode ser adicionada se o Aspecto a que
+                                            ela está ligada também foi.</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="txt-right" scope="row">**</th>
+                                        <td data-i18n="paranoia-rule">Paranóia têm regras especiais em Testes
+                                            de Risco e de Testes de Resistência.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        
+                </div>
+                <!--Occupations-->
+                <div class=" occupation">
+                    <p class="data">
+                        <span class="label dice" data-i18n="occupation">Ocupação</span>
+                        <input id="ocupacao-1" type="text" name="attr_occupation"/>
+                        <span class="label dice">2&#170;</span>
+                        <input id="ocupacao-2" type="text" name="attr_occupation-2"/>
+                        <span class="label dice">3&#170;</span>
+                        <input id="ocupacao-3" type="text" name="attr_occupation-3"/>
+                    </p>
+                </div>
+                <!--Aspects-->
+                <div class="aspects">
+                    <table class="w-100">
+                        <thead>
+                            <tr>
+                                <th class="txt-center" scope="col" data-i18n="aspects"><i class="dice"></i>ASPECTOS</th>
+                                <th class="txt-center" scope="col" data-i18n="specializations">ESPECIALIZAÇÕES<i class="two-dices"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="ASPECTOS">
+                                    <input id="aspc-1" type="text" name="attr_aspc-1">
+                                </td>
+                                <td data-label="ESPECIALIZAÇÕES">
+                                    <input id="espc-1" type="text" name="attr_espc-1">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="ASPECTOS">
+                                    <input id="aspc-2" type="text" name="attr_aspc-2">
+                                </td>
+                                <td data-label="ESPECIALIZAÇÕES">
+                                    <input id="espc-2" type="text" name="attr_espc-2">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="ASPECTOS">
+                                    <input id="aspc-3" type="text" name="attr_aspc-3">
+                                </td>
+                                <td data-label="ESPECIALIZAÇÕES">
+                                    <input id="espc-3" type="text" name="attr_espc-3">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="ASPECTOS">
+                                    <input id="aspc-4" type="text" name="attr_aspc-4">
+                                </td>
+                                <td data-label="ESPECIALIZAÇÕES">
+                                    <input id="espc-4" type="text" name="attr_espc-4">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="ASPECTOS">
+                                    <input id="aspc-5" type="text" name="attr_aspc-5">
+                                </td>
+                                <td data-label="ESPECIALIZAÇÕES">
+                                    <input id="espc-5" type="text" name="attr_espc-5">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="ASPECTOS">
+                                    <input id="aspc-6" type="text" name="attr_aspc-6">
+                                </td>
+                                <td data-label="ESPECIALIZAÇÕES">
+                                    <input id="espc-6" type="text" name="attr_espc-6">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="ASPECTOS">
+                                    <input id="aspc-7" type="text" name="attr_aspc-7">
+                                </td>
+                                <td data-label="ESPECIALIZAÇÕES">
+                                    <input id="espc-7" type="text" name="attr_espc-7">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="ASPECTOS">
+                                    <input id="aspc-8" type="text" name="attr_aspc-8">
+                                </td>
+                                <td data-label="ESPECIALIZAÇÕES">
+                                    <input id="espc-8" type="text" name="attr_espc-8">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="ASPECTOS">
+                                    <input id="aspc-9" type="text" name="attr_aspc-9">
+                                </td>
+                                <td data-label="ESPECIALIZAÇÕES">
+                                    <input id="espc-9" type="text" name="attr_espc-9">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="ASPECTOS">
+                                    <input id="aspc-10" type="text" name="attr_aspc-10">
+                                </td>
+                                <td data-label="ESPECIALIZAÇÕES">
+                                    <input id="espc-10" type="text" name="attr_espc-10">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                 
+                <div class="equips">
+                    <!--Equipment-->
+                    <div class="equipment">
+                        <table class="w-100">
+                            <thead>
+                                <tr>
+                                    <th scope="col" data-i18n="equipment">Equipamentos</th>
+                                    <th scope="col" data-i18n="marker">Marcadores</th>
+                                    <th scope="col" data-i18n="marker">Marcadores</th>
+                                    <th scope="col" data-i18n="marker">Marcadores</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="equipamentos">
+                                        <input type="text" name="attr_equi">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker1">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker2">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker3">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="equipamentos">
+                                        <input type="text" name="attr_equi_2">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker1_2">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker2_2">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker3_2">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="equipamentos">
+                                        <input type="text" name="attr_equi_3">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker1_3">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker2_3">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker3_3">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="equipamentos">
+                                        <input type="text" name="attr_equi_4">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker1_4">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker2_4">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker3_4">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="equipamentos">
+                                        <input type="text" name="attr_equi_5">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker1_5">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker2_5">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker3_5">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="equipamentos">
+                                        <input type="text" name="attr_equi_6">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker1_6">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker2_6">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker3_6">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="equipamentos">
+                                        <input type="text" name="attr_equi_7">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker1_7">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker2_7">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker3_7">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="equipamentos">
+                                        <input type="text" name="attr_equi_8">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker1_8">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker2_8">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker3_8">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="equipamentos">
+                                        <input type="text" name="attr_equi_9">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker1_9">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker2_9">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker3_9">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="equipamentos">
+                                        <input type="text" name="attr_equi_10">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker1_10">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker2_10">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker3_10">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="equipamentos">
+                                        <input type="text" name="attr_equi_11">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker1_11">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker2_11">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker3_11">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="equipamentos">
+                                        <input type="text" name="attr_equi_12">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker1_12">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker2_12">
+                                    </td>
+                                    <td data-label="marcadores">
+                                        <input type="text" name="attr_marker3_12">
+                                    </td>
+                                </tr>
+                                
+                                                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--Belongings-->
+                    <div class="belongings">
+                        <span class="label" data-i18n="belongings">Pertences</span>
+                        <table class="w-100">
+                            <tbody>
+                                <tr>
+                                    <!--Usage for Belongs 1-->
+                                    <td class="used">
+                                        <input type="checkbox" id="used1" name="attr_used1">
+                                        <label for="used1" class="" data-i18n="used">Usado</label>
+                                    </td>
+                                    <!--Belongs 1-->
+                                    <td class="belongs">
+                                        <input type="text" name="attr_belongs-1">
+                                    </td>
+                                    <td class="space"><!--space--></td>
+                                    <!--Belongs 2-->
+                                    <td class="belongs">
+                                        <input type="text" name="attr_belongs-2">
+                                    </td>
+                                    <!--Usage for Belongs 2-->
+                                    <td class="used">
+                                        <input type="checkbox" id="used2" name="attr_used2">
+                                        <label for="used2" class="" data-i18n="used">Usado</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                    <!--Notes-->
+                    <div class="notes">
+                        <span class="label" data-i18n="notes">Notas</span>
+                        <textarea rows="6" name="attr_notes"></textarea>
+                    </div>
+                </div>
+                <!--Conditions-->
+                <div class="conditions">
+                    <!--Building Character-->
+                    <div class="char-build rule-box">
+                        <span class="tittle" data-i18n="char-build">Criação de Personagem</span>
+                        <ol>
+                            <li data-i18n="choose-occupation">
+                                Defina uma <b>OCUPAÇÃO</b>.
+                            </li>
+                            <li>
+                                <span data-i18n="choose-aspects" class="mytooltip">
+                                Defina 5 entre <b>ASPECTOS</b> e <b style="text-decoration: underline; cursor:pointer;">ESPECIALIZAÇÕES</b>
+                                </span>
+                                <span class="tip" data-i18n="specialization-aspect">
+                                    (Especializações devem sempre ser ligadas a Aspectos).
+                                </span>
+                            </li>
+                            <li data-i18n="choose-equipment">
+                                Escolha até 7 <b>EQUIPAMENTOS</b> que estão
+                                com seu personagem no início do jogo.
+                            </li>
+
+                        </ol>
+                    </div>
+                    <!--HitPoints-->
+                    <div class="hitpoints">
+                        <span class="label"><span data-i18n="hitpoints">PONTOS DE VIDA</span>: <span class="six">6</span></span>
+                        <span class="bordered cond" data-i18n="damage-conditions">CONDIÇÕES DE DANO</span>
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="one" name="attr_hitpoints-1">
+                                    <label class="checkbox" for="one"> -1 </label>
+                                <input type="text" name="attr_hitpoints-cond-1">
+                            </li>
+                            <li>
+                                <input type="checkbox" id="two" name="attr_hitpoints-2">
+                                    <label class="checkbox" for="two"> -2 </label>
+                                <input type="text" name="attr_hitpoints-cond-2">
+                            </li>
+                            <li>
+                                <input type="checkbox" id="three" name="attr_hitpoints-3">
+                                    <label class="checkbox" for="three"> -3 </label>
+                                <input type="text" name="attr_hitpoints-cond-3">
+                            </li>
+                            <li>
+                                <input type="checkbox" id="four" name="attr_hitpoints-4">
+                                    <label class="checkbox" for="four"> -4 </label>
+                                <input type="text" name="attr_hitpoints-cond-4">
+                            </li>
+                            <li>
+                                <input type="checkbox" id="five" name="attr_hitpoints-5">
+                                    <label class="checkbox" for="five"> -5 </label>
+                                <input type="text" name="attr_hitpoints-cond-5">
+                            </li>
+                            <li>
+                                <input type="checkbox" id="six" name="attr_hitpoints-6">
+                                    <label class="checkbox" for="six"> -6 </label>
+                                <input type="text" name="attr_hitpoints-cond-6">
+                            </li>
+                        </ul>
+                        <span class="bordered incon" data-i18n="unconscious" name="attr_unconscious">INCONSCIENTE</span>
+                    </div>
+                    <!--Enduring Damage Conditions-->
+                    <div class="enduring">
+                        <span class="label" data-i18n="enduring-damage-conditions">CONDIÇÕES DE DANO DURADOURAS</span>
+                        <ul>
+                            <li>
+                                <input type="text" name="attr_enduring">
+                                <input type="checkbox" id="dmg-cond1" name="attr_dmg-cond1">
+                                <label class="checkbox" for="dmg-cond1"></label>
+                            </li>
+                            <li>
+                                <input type="text" name="attr_enduring-2">
+                                <input type="checkbox" id="dmg-cond2" name="attr_dmg-cond2">
+                                <label class="checkbox" for="dmg-cond2"></label>
+                            </li>
+                            <li>
+                                <input type="text" name="attr_enduring-3">
+                                <input type="checkbox" id="dmg-cond3" name="attr_dmg-cond3">
+                                <label class="checkbox" for="dmg-cond3"></label>
+                            </li>
+                        </ul>
+                        <span class="bordered vertical"><span data-i18n="permanent">Permanente</span></span>
+                    </div>
+                    <!--Paranoia-->
+                    <div class="paranoia">
+                        <span class="label" data-i18n="paranoia">Paranoia</span>
+                        <ul>
+                            <li class="flex space-between">
+                                <div style="margin-left: -3px;">
+                                    <input type="checkbox" id="para1" name="attr_para1">
+                                    <label class="checkbox" for="para1">1</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="para2" name="attr_para2">
+                                    <label class="checkbox" for="para2">2</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="para3" name="attr_para3">
+                                    <label class="checkbox" for="para3">3</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="para4" name="attr_para4">
+                                    <label class="checkbox" for="para4">4</label>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <input type="checkbox" id="para5" name="attr_para5">
+                                <label class="checkbox" for="para5">5</label>
+                                <input type="text">
+                            </li>
+                            <li class="flex">
+                                <input type="checkbox" id="para6" name="attr_para6">
+                                <label class="checkbox" for="para6">6</label>
+                                <input type="text">
+                            </li>
+                        </ul>
+                        <span class="bordered" data-i18n="paranoia-conditions">CONDIÇÕES PARANOICAS</span>
+                        
+                        <span class="label out-of-game">
+                            <input type="checkbox" id="out-of-game" name="attr_out-of-game">
+                            <label class="checkbox" for="out-of-game" data-i18n="out-of-play">Fora do Jogo</label>
+                        </span>
+                    </div>
+                </div>
+          </div>
+          <!--Footer-->
+          <span class="footer" data-i18n="footer">Ficha de Personagem de Conspirações RPG de Diego Bassinello e Stefano Pelletti | 2022.04 | Todos os direitos reservados.</span>
+    </div>
+
+
+    <!--Page 2-->
+    <div class="container">
+        <!--Page 2 logo-->
+        <div class="conspa"></div>  
+        <div class="container-annotations">
+            <!--Annotations Header-->
+            <div class="header-bg annotations-header"></div>
+            <!--Annotations 1-->
+            <div class="annotations-1">
+                <div class="annotations-tittle">
+                    <input type="text" name="attr_annotations-tittle">
+                </div>
+                <div class="annotation">
+                    <textarea class="" rows="11" name="attr_annotations"></textarea>
+                </div>
+            </div>
+            <!--Annotations 2-->
+            <div class="annotations-2">
+                <div class="annotations-tittle">
+                    <input type="text" name="attr_annotations-tittle-2">
+                </div>
+                <div class="annotation">
+                    <textarea class="" rows="11" name="attr_annotations-2"></textarea>
+                </div>
+            </div>
+            <!--Annotations 3-->
+            <div class="annotations-3">
+                <div class="annotations-tittle">
+                    <input type="text" name="attr_annotations-tittle-3">
+                </div>
+                <div class="annotation">
+                    <textarea class="" rows="11" name="attr_annotations-3"></textarea>
+                </div>
+            </div>
+            <!--Annotations 4-->
+            <div class="annotations-4">
+                <div class="annotations-tittle">
+                    <input type="text" name="attr_annotations-tittle-4">
+                </div>
+                <div class="annotation">
+                    <textarea class="" rows="11" name="attr_annotations-4"></textarea>
+                </div>
+            </div>
+            <!--Annotations 5-->
+            <div class="annotations-5">
+                <div class="annotations-tittle">
+                    <input type="text" name="attr_annotations-tittle-5">
+                </div>
+                <div class="annotation">
+                    <textarea class="" rows="11" name="attr_annotations-5"></textarea>
+                </div>
+            </div>
+            <!--Annotations 6-->
+            <div class="annotations-6">
+                <div class="annotations-tittle">
+                    <input type="text" name="attr_annotations-tittle-6">
+                </div>
+                <div class="annotation">
+                    <textarea class="" rows="11" name="attr_annotations-6"></textarea>
+                </div>
+            </div>
+            
+            <!--Comments-->
+            <div class="comments">
+                <textarea class="comments" rows="11" name="attr_comments"></textarea>
+            </div>
+        </div>
+        <!--Footer-->
+        <span class="footer" data-i18n="footer">Ficha de Personagem de Conspirações RPG de Diego Bassinello e Stefano Pelletti | 2022.04 | Todos os direitos reservados.</span>
+        
+    </div>
+    </div>
+
+
+    <script type="text/worker">
+        (function () {
+        "use strict";"use strict";
+        on("sheet:opened", function() {
+            return[0, 1, 2, 3, 4, 5, 6, 7].forEach(function(t) {
+                return setAdvSkillsLines("advskill_".concat(t, "_name"))
+            }
+            )
+        }
+        ),
+
+        }
+
+        )();
+        </script>
+        <script type="text/worker">
+    on("sheet:opened", function() {
+        // Load archetype sheet #archetype
+        let select = document.getElementById('archetype');
+        let option = select.options[select.selectedIndex];
+        let newClass = option.value;
+        setAttrs({archetype: newClass});
+      
+        on("change:archetype sheet:opened", function(){
+            let select = document.getElementById('archetype');
+            let option = select.options[select.selectedIndex];
+            let newClass = option.value;
+            setAttrs({archetype: newClass});
+        }
+        
+        // Btn - Popup Montar Rolagem
+        const abrirPopup = document.getElementById('abrir-popup');
+        const popup = document.getElementById('popup');
+        const fecharPopup = document.getElementById('fechar-popup');
+        const formDados = document.getElementById('form-dados');
+        const checkboxes = document.getElementById('dinamic');
+        const botaoRolar = document.getElementById('rolar-dados');
+      
+        // Array com os IDs dos checkboxes a serem criados
+        const idsCheckbox = [];
+        const config = {
+          'ocupacao': 3,
+          'aspc': 10,
+          'espc': 10,
+        };
+        for (const [prefix, count] of Object.entries(config)) {
+          for (let i = 1; i <= count; i++) {
+            idsCheckbox.push(`${prefix}-${i}`);
+          }
+        }
+      
+        function adicionarCheckboxes(event) {
+          const id = event.target.id;
+          const input = event.target;
+          if (input.checked) {
+            setAttrs({[id]: 'X'});
+          } else {
+            setAttrs({[id]: ''});
+          }
+        }
+      
+        function atualizarCheckboxes() {
+          getAttrs(idsCheckbox, function(values) {
+            idsCheckbox.forEach(function(id) {
+              const input = document.getElementById(id);
+              if (input) {
+                input.checked = values[id] === 'X';
+              }
+            });
+          });
+        }
+      
+        function abrirPopupHandler() {
+          popup.style.display = 'block';
+          popup.classList.add('open');
+        }
+      
+        function fecharPopupHandler() {
+          popup.style.display = 'none';
+        }
+      
+        // Adiciona os checkboxes no formulário ao carregar a página
+        atualizarCheckboxes();
+      
+        // Adiciona event listeners para os inputs que precisam atualizar os checkboxes
+        idsCheckbox.forEach(function(id) {
+          const input = document.getElementById(id);
+          if (input) {
+            input.addEventListener('input', adicionarCheckboxes);
+          }
+        });
+      
+        // Abre o popup ao clicar no botão
+        abrirPopup.addEventListener('click', abrirPopupHandler);
+      
+        // Fecha o popup ao clicar no botão "close"
+        fecharPopup.addEventListener('click', fecharPopupHandler);
+      
+        // Fecha o popup quando o usuário clica dentro do popup aberto
+        document.addEventListener('click', function(event) {
+          const openDiv = document.querySelector('.open');
+          if (event.target === openDiv) {
+            fecharPopupHandler();
+          }
+        });
+
+
+        // Roll each die and add the result to the sum
+        for (var i = 0; i < numDice; i++) {
+            var roll = Math.floor(Math.random() * 6) + 1;
+            sum += roll;
+            rolls.push(roll);
+        }
+        
+        // Display the rolls and sum to the user
+        var rollDisplay = rolls.join(" + ") + " = " + sum;
+        document.getElementById("roll-display").textContent = rollDisplay;
+        
+  }
+</script>

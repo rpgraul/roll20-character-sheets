@@ -1,0 +1,21 @@
+{
+  "html": "ConspRPG.html",
+  "css": "ConspRPG_css.css",
+  "api": "ConspRPG_script.js",
+  "authors": "Design by Diego Bassinelo, Code by Raul Tribuzi",
+  "roll20userid": "####",
+  "preview": "Conspiracoes.JPG",
+  "instructions": "Descrição da ficha, add links da loja, fastplay e afins...",
+  "useroptions": [
+    {
+      "attribute": "",
+      "displayname": "",
+      "displaytranslationkey": "",
+      "type": "",
+      "default": "",
+      "description": "",
+      "descriptiontranslationkey": ""
+    }
+  ],
+  "legacy": true
+}
